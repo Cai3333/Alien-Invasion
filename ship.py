@@ -26,12 +26,22 @@ class Ship:
     def update(self):
         """Update the ship's position based on the movement flag."""
         # Update the ship's x value, not the rect.
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.x += self.settings.ship_speed
+        if self.moving_right:
+            # Si toca pared derecha, nave para pared izquierda
+            if self.rect.right > (self.screen_rect.right - 2):
+                self.x = (self.screen_rect.left)
+            # Si no toca pared derecha, nave mueve derecha
+            else:
+                self.x += self.settings.ship_speed
         # Usamos otro if para que se comprueben las dos condiciones
         # Si usamos elif y presionamos <- y ->, ganaría derecha porque va primero
-        if self.moving_left and self.rect.left > 0:
-            self.x -= self.settings.ship_speed
+        if self.moving_left:
+            # Si toca pared izquierda, nave para pared derecha
+            if self.rect.left < (self.screen_rect.left + 2):
+                self.x = (self.screen_rect.right - 50)
+            # Si no toca parec izquierda, nave mueve izquierda
+            else:
+                self.x -= self.settings.ship_speed
         
         # Update rect object from self.x.
         self.rect.x = self.x
