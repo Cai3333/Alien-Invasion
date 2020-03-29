@@ -51,11 +51,13 @@ class AlienInvasion:
                 self._update_aliens()  
                 
             self._update_screen()
+            
     
     def _check_events(self):
         """Respong to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self._write_score()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
@@ -98,6 +100,7 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
             self.ship.moving_left = True
         elif event.key == pygame.K_ESCAPE:
+            self._write_score()
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
@@ -254,7 +257,12 @@ class AlienInvasion:
             
         # Update screen
         pygame.display.flip()
-        
+    
+    def _write_score(self):
+        file = open("score.txt", "w")
+        file.write(str(self.stats.high_score))
+        file.close()
+            
 if __name__ == "__main__":
     # Make a game instance, and run the game.
     ai = AlienInvasion()

@@ -9,8 +9,10 @@ class GameStats:
         # Start Alien Invasion in an inactive state.
         self.game_active = False
         
-        # High score shoul never be reset.
-        self.high_score = 0
+        # High score should never be reset.
+        with open("score.txt") as file:
+            data = file.read()
+        self.high_score = int(data)
         
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
